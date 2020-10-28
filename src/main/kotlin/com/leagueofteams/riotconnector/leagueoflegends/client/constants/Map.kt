@@ -12,7 +12,7 @@ enum class Map (val id: Int, val mapName: String, val notes: String) {
     THE_CRYSTAL_SCAR                (8, "The Crystal Scar", "Dominion map"),
     TWISTED_TREELINE                (10, "Twisted Treeline", "Last TT map"),
     SUMMONERS_RIFT                  (11, "Summoner's Rift", "Current Version"),
-    HOWLING_ABYSS                   (12, "Howling Abyss", "ARAM map"),
+    HA                              (12, "Howling Abyss", "ARAM map"),
     BUTCHERS_BRIDGE                 (14, "Butcher's Bridge", "Alternate ARAM map"),
     COSMIC_RUINS                    (16, "Cosmic Ruins", "Dark Star: Singularity map"),
     VALORAN_CITY_PARK               (18, "Valoran City Park", "Star Guardian Invasion map"),

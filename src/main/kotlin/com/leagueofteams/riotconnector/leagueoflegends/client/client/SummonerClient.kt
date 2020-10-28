@@ -2,23 +2,26 @@ package com.leagueofteams.riotconnector.leagueoflegends.client.client
 
 import com.leagueofteams.riotconnector.leagueoflegends.client.configuration.ClientConfiguration
 import com.leagueofteams.riotconnector.leagueoflegends.client.response.summoner.SummonerDTO
+import feign.Param
+import feign.RequestLine
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import java.net.URI
 
-@FeignClient(url = "\${connector.league.summoner.url}", name = "\${connector.league.summoner.name}", configuration = [ClientConfiguration::class] )
+@FeignClient(name = "\${connector.league.summoner.name}", configuration = [ClientConfiguration::class])
 interface SummonerClient {
 
-    @GetMapping("/lol/summoner/v4/summoners/by-account/{encryptedAccountId}")
-    fun getSummonerByAccountId(@PathVariable encryptedAccountId: String): SummonerDTO
+    @RequestLine("GET /lol/summoner/v4/summoners/by-account/{encryptedAccountId}")
+    fun getSummonerByAccountId(urlPrefix: URI, @Param("encryptedAccountId") encryptedAccountId: String): SummonerDTO
 
-    @GetMapping("/lol/summoner/v4/summoners/by-name/{summonerName}")
-    fun getSummonerBySummonerName(@PathVariable summonerName: String): SummonerDTO
+    @RequestLine("GET /lol/summoner/v4/summoners/by-name/{summonerName}")
+    fun getSummonerBySummonerName(urlPrefix: URI, @Param("summonerName") summonerName: String): SummonerDTO
 
-    @GetMapping("/lol/summoner/v4/summoners/by-puuid/{encryptedPUUID}")
-    fun getSummonerByPUUID(@PathVariable encryptedPUUID: String): SummonerDTO
+    @RequestLine("GET /lol/summoner/v4/summoners/by-puuid/{encryptedPUUID}")
+    fun getSummonerByPUUID(urlPrefix: URI, @Param("encryptedPUUID") encryptedPUUID: String): SummonerDTO
 
-    @GetMapping("/lol/summoner/v4/summoners/{encryptedSummonerId}")
-    fun getSummonerBySummonerId(@PathVariable encryptedSummonerId: String): SummonerDTO
+    @RequestLine("GET /lol/summoner/v4/summoners/{encryptedSummonerId}")
+    fun getSummonerBySummonerId(urlPrefix: URI, @Param("encryptedSummonerId") encryptedSummonerId: String): SummonerDTO
 
 }

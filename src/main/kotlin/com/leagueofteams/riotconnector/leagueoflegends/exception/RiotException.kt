@@ -8,6 +8,6 @@ open class RiotException(
         var errorCode: String? = null,
         var description: String
 
-) : RuntimeException() {
+) : RuntimeException("Error Code=$errorCode.\n$description") {
     constructor(statusCode: HttpStatus, description: String) : this(null, statusCode, null, description)
 }

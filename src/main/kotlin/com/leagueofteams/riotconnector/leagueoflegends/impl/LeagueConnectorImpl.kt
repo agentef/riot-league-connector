@@ -2,6 +2,7 @@ package com.leagueofteams.riotconnector.leagueoflegends.impl
 
 import com.leagueofteams.riotconnector.leagueoflegends.LeagueConnector
 import com.leagueofteams.riotconnector.leagueoflegends.client.client.LeagueClient
+import com.leagueofteams.riotconnector.leagueoflegends.client.constants.RegionUrl
 import com.leagueofteams.riotconnector.leagueoflegends.client.request.league.Division
 import com.leagueofteams.riotconnector.leagueoflegends.client.request.league.Queue
 import com.leagueofteams.riotconnector.leagueoflegends.client.request.league.Tier
@@ -13,6 +14,7 @@ import com.leagueofteams.riotconnector.leagueoflegends.exception.RiotException
 import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.http.HttpStatus.NOT_FOUND
 import org.springframework.stereotype.Service
+import java.net.URI
 
 @Service
 class LeagueConnectorImpl(
@@ -20,9 +22,9 @@ class LeagueConnectorImpl(
 ) : LeagueConnector {
 
     override
-    fun getChallengerLeagueByQueue(queue: Queue): LeagueListDTO {
+    fun getChallengerLeagueByQueue(region: RegionUrl, queue: Queue): LeagueListDTO {
         try {
-            return leagueClient.getChallengerLeagueByQueue(queue.name)
+            return leagueClient.getChallengerLeagueByQueue(URI(region.urlPrefix), queue.name)
         } catch (ex: RiotException) {
             when (ex.statusCode) {
                 BAD_REQUEST -> throw LeagueException(LeagueError.INVALID_LEAGUE)
@@ -33,9 +35,9 @@ class LeagueConnectorImpl(
     }
 
     override
-    fun getGrandmasterLeagueByQueue(queue: Queue): LeagueListDTO {
+    fun getGrandmasterLeagueByQueue(region: RegionUrl, queue: Queue): LeagueListDTO {
         try {
-            return leagueClient.getGrandmasterLeagueByQueue(queue.name)
+            return leagueClient.getGrandmasterLeagueByQueue(URI(region.urlPrefix), queue.name)
         } catch (ex: RiotException) {
             when (ex.statusCode) {
                 BAD_REQUEST -> throw LeagueException(LeagueError.INVALID_LEAGUE)
@@ -46,9 +48,9 @@ class LeagueConnectorImpl(
     }
 
     override
-    fun getMasterLeagueByQueue(queue: Queue): LeagueListDTO {
+    fun getMasterLeagueByQueue(region: RegionUrl, queue: Queue): LeagueListDTO {
         try {
-            return leagueClient.getMasterLeagueByQueue(queue.name)
+            return leagueClient.getMasterLeagueByQueue(URI(region.urlPrefix), queue.name)
         } catch (ex: RiotException) {
             when (ex.statusCode) {
                 BAD_REQUEST -> throw LeagueException(LeagueError.INVALID_LEAGUE)
@@ -59,9 +61,9 @@ class LeagueConnectorImpl(
     }
 
     override
-    fun getAllTheLeagueEntries(queue: Queue, division: Division, tier: Tier): List<LeagueEntryDTO> {
+    fun getAllTheLeagueEntries(region: RegionUrl, queue: Queue, division: Division, tier: Tier): List<LeagueEntryDTO> {
         try {
-            return leagueClient.getAllTheLeagueEntries(queue.name, division.name, tier.name)
+            return leagueClient.getAllTheLeagueEntries(URI(region.urlPrefix), queue.name, division.name, tier.name)
         } catch (ex: RiotException) {
             when (ex.statusCode) {
                 BAD_REQUEST -> throw LeagueException(LeagueError.INVALID_LEAGUE)
@@ -72,9 +74,9 @@ class LeagueConnectorImpl(
     }
 
     override
-    fun getLeagueByLeagueId(leagueId: Long): LeagueListDTO {
+    fun getLeagueByLeagueId(region: RegionUrl, leagueId: Long): LeagueListDTO {
         try {
-            return leagueClient.getLeagueByLeagueId(leagueId)
+            return leagueClient.getLeagueByLeagueId(URI(region.urlPrefix), leagueId)
         } catch (ex: RiotException) {
             when (ex.statusCode) {
                 BAD_REQUEST -> throw LeagueException(LeagueError.INVALID_LEAGUE)

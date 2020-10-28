@@ -7,7 +7,7 @@ enum class MatchError(val code: String, val status: HttpStatus, val description:
 
     MATCH_NOT_FOUND_ERROR       ("RM-001", NOT_FOUND, "Match not found."),
     INVALID_QUEUE              ("RM-001", NOT_FOUND, "Match not found."),
-    UNKNOWN_ERROR               ("RM-999", INTERNAL_SERVER_ERROR, "Unknown error."),
+    UNKNOWN_ERROR               ("RM-999", INTERNAL_SERVER_ERROR, "Unknown error: "),
 
 
 }
