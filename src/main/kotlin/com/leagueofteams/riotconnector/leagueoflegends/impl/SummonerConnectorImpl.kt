@@ -5,9 +5,9 @@ import com.leagueofteams.riotconnector.leagueoflegends.client.client.SummonerCli
 import com.leagueofteams.riotconnector.leagueoflegends.client.constants.RegionUrl
 import com.leagueofteams.riotconnector.leagueoflegends.client.response.summoner.SummonerDTO
 import com.leagueofteams.riotconnector.leagueoflegends.exception.RiotException
-import com.leagueofteams.riotconnector.leagueoflegends.exception.error.SummonerError
 import com.leagueofteams.riotconnector.leagueoflegends.exception.SummonerException
-import org.springframework.http.HttpStatus.NOT_FOUND
+import com.leagueofteams.riotconnector.leagueoflegends.exception.error.SummonerError
+import org.springframework.http.HttpStatus.*
 import org.springframework.stereotype.Service
 import java.net.URI
 
@@ -22,6 +22,9 @@ class SummonerConnectorImpl(
             return summonerClient.getSummonerByAccountId(URI(region.urlPrefix), encryptedAccountId)
         } catch (ex: RiotException) {
             when (ex.statusCode) {
+                FORBIDDEN -> throw SummonerException(SummonerError.INVALID_API_KEY)
+                BAD_REQUEST -> throw SummonerException(SummonerError.WRONG_REQUEST_FORMAT)
+                TOO_MANY_REQUESTS -> throw SummonerException(SummonerError.REQUEST_LIMIT_EXCEEDED)
                 NOT_FOUND -> throw SummonerException(SummonerError.SUMMONER_NOT_FOUND_ERROR)
                 else -> throw SummonerException(SummonerError.UNKNOWN_ERROR)
             }
@@ -34,6 +37,9 @@ class SummonerConnectorImpl(
             return summonerClient.getSummonerBySummonerId(URI(region.urlPrefix), encryptedSummonerId)
         } catch (ex: RiotException) {
             when (ex.statusCode) {
+                FORBIDDEN -> throw SummonerException(SummonerError.INVALID_API_KEY)
+                BAD_REQUEST -> throw SummonerException(SummonerError.WRONG_REQUEST_FORMAT)
+                TOO_MANY_REQUESTS -> throw SummonerException(SummonerError.REQUEST_LIMIT_EXCEEDED)
                 NOT_FOUND -> throw SummonerException(SummonerError.SUMMONER_NOT_FOUND_ERROR)
                 else -> throw SummonerException(SummonerError.UNKNOWN_ERROR)
             }
@@ -46,6 +52,9 @@ class SummonerConnectorImpl(
             return summonerClient.getSummonerByPUUID(URI(region.urlPrefix), puuid)
         } catch (ex: RiotException) {
             when (ex.statusCode) {
+                FORBIDDEN -> throw SummonerException(SummonerError.INVALID_API_KEY)
+                BAD_REQUEST -> throw SummonerException(SummonerError.WRONG_REQUEST_FORMAT)
+                TOO_MANY_REQUESTS -> throw SummonerException(SummonerError.REQUEST_LIMIT_EXCEEDED)
                 NOT_FOUND -> throw SummonerException(SummonerError.SUMMONER_NOT_FOUND_ERROR)
                 else -> throw SummonerException(SummonerError.UNKNOWN_ERROR)
             }
@@ -58,6 +67,9 @@ class SummonerConnectorImpl(
             return summonerClient.getSummonerBySummonerName(URI(region.urlPrefix), summonerName)
         } catch (ex: RiotException) {
             when (ex.statusCode) {
+                FORBIDDEN -> throw SummonerException(SummonerError.INVALID_API_KEY)
+                BAD_REQUEST -> throw SummonerException(SummonerError.WRONG_REQUEST_FORMAT)
+                TOO_MANY_REQUESTS -> throw SummonerException(SummonerError.REQUEST_LIMIT_EXCEEDED)
                 NOT_FOUND -> throw SummonerException(SummonerError.SUMMONER_NOT_FOUND_ERROR)
                 else -> throw SummonerException(SummonerError.UNKNOWN_ERROR)
             }

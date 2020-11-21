@@ -15,5 +15,5 @@ interface MatchConnector {
     fun getMatchIdsByTournamentCode(tournamentCode: String, region: RegionUrl): List<Long>
     fun getMatchTimeLineByMatchId(region: RegionUrl, matchId: Long): MatchTimelineDto
 
-    fun getMatchesByEncryptedAccountId(region: RegionUrl, accountId: String, champion: Set<ChampionData>?, queue: Set<Queue>?, endTime: LocalDateTime?, beginTime: LocalDateTime?, endIndex: Int?, beginIndex: Int?): MatchlistDto
+    fun getMatchesByEncryptedAccountId(region: RegionUrl, accountId: String, champion: ChampionData?, queue: Queue?, endTime: LocalDateTime?, beginTime: LocalDateTime?, endIndex: Int?, beginIndex: Int?): MatchlistDto
 }

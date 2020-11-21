@@ -8,11 +8,10 @@ import com.leagueofteams.riotconnector.leagueoflegends.client.request.league.Que
 import com.leagueofteams.riotconnector.leagueoflegends.client.request.league.Tier
 import com.leagueofteams.riotconnector.leagueoflegends.client.response.league.LeagueEntryDTO
 import com.leagueofteams.riotconnector.leagueoflegends.client.response.league.LeagueListDTO
-import com.leagueofteams.riotconnector.leagueoflegends.exception.error.LeagueError
 import com.leagueofteams.riotconnector.leagueoflegends.exception.LeagueException
 import com.leagueofteams.riotconnector.leagueoflegends.exception.RiotException
-import org.springframework.http.HttpStatus.BAD_REQUEST
-import org.springframework.http.HttpStatus.NOT_FOUND
+import com.leagueofteams.riotconnector.leagueoflegends.exception.error.LeagueError
+import org.springframework.http.HttpStatus.*
 import org.springframework.stereotype.Service
 import java.net.URI
 
@@ -27,6 +26,7 @@ class LeagueConnectorImpl(
             return leagueClient.getChallengerLeagueByQueue(URI(region.urlPrefix), queue.name)
         } catch (ex: RiotException) {
             when (ex.statusCode) {
+                TOO_MANY_REQUESTS -> throw LeagueException(LeagueError.REQUEST_LIMIT_EXCEEDED)
                 BAD_REQUEST -> throw LeagueException(LeagueError.INVALID_LEAGUE)
                 NOT_FOUND -> throw LeagueException(LeagueError.LEAGUE_NOT_FOUND_ERROR)
                 else -> throw LeagueException(LeagueError.UNKNOWN_ERROR)
@@ -40,6 +40,8 @@ class LeagueConnectorImpl(
             return leagueClient.getGrandmasterLeagueByQueue(URI(region.urlPrefix), queue.name)
         } catch (ex: RiotException) {
             when (ex.statusCode) {
+                FORBIDDEN -> throw LeagueException(LeagueError.INVALID_API_KEY)
+                TOO_MANY_REQUESTS -> throw LeagueException(LeagueError.REQUEST_LIMIT_EXCEEDED)
                 BAD_REQUEST -> throw LeagueException(LeagueError.INVALID_LEAGUE)
                 NOT_FOUND -> throw LeagueException(LeagueError.LEAGUE_NOT_FOUND_ERROR)
                 else -> throw LeagueException(LeagueError.UNKNOWN_ERROR)
@@ -53,6 +55,8 @@ class LeagueConnectorImpl(
             return leagueClient.getMasterLeagueByQueue(URI(region.urlPrefix), queue.name)
         } catch (ex: RiotException) {
             when (ex.statusCode) {
+                FORBIDDEN -> throw LeagueException(LeagueError.INVALID_API_KEY)
+                TOO_MANY_REQUESTS -> throw LeagueException(LeagueError.REQUEST_LIMIT_EXCEEDED)
                 BAD_REQUEST -> throw LeagueException(LeagueError.INVALID_LEAGUE)
                 NOT_FOUND -> throw LeagueException(LeagueError.LEAGUE_NOT_FOUND_ERROR)
                 else -> throw LeagueException(LeagueError.UNKNOWN_ERROR)
@@ -66,6 +70,8 @@ class LeagueConnectorImpl(
             return leagueClient.getAllTheLeagueEntries(URI(region.urlPrefix), queue.name, division.name, tier.name)
         } catch (ex: RiotException) {
             when (ex.statusCode) {
+                FORBIDDEN -> throw LeagueException(LeagueError.INVALID_API_KEY)
+                TOO_MANY_REQUESTS -> throw LeagueException(LeagueError.REQUEST_LIMIT_EXCEEDED)
                 BAD_REQUEST -> throw LeagueException(LeagueError.INVALID_LEAGUE)
                 NOT_FOUND -> throw LeagueException(LeagueError.LEAGUE_NOT_FOUND_ERROR)
                 else -> throw LeagueException(LeagueError.UNKNOWN_ERROR)
@@ -79,11 +85,26 @@ class LeagueConnectorImpl(
             return leagueClient.getLeagueByLeagueId(URI(region.urlPrefix), leagueId)
         } catch (ex: RiotException) {
             when (ex.statusCode) {
+                FORBIDDEN -> throw LeagueException(LeagueError.INVALID_API_KEY)
+                TOO_MANY_REQUESTS -> throw LeagueException(LeagueError.REQUEST_LIMIT_EXCEEDED)
                 BAD_REQUEST -> throw LeagueException(LeagueError.INVALID_LEAGUE)
                 NOT_FOUND -> throw LeagueException(LeagueError.LEAGUE_NOT_FOUND_ERROR)
                 else -> throw LeagueException(LeagueError.UNKNOWN_ERROR)
             }
         }
     }
+
+    override fun getLeagueEntriesBySummonerId(summonerId: String, region: RegionUrl): List<LeagueEntryDTO> {
+        try {
+            return leagueClient.getLeagueEntriesBySummonerId(URI(region.urlPrefix), summonerId)
+        } catch (ex: RiotException) {
+            when (ex.statusCode) {
+                FORBIDDEN -> throw LeagueException(LeagueError.INVALID_API_KEY)
+                TOO_MANY_REQUESTS -> throw LeagueException(LeagueError.REQUEST_LIMIT_EXCEEDED)
+                BAD_REQUEST -> throw LeagueException(LeagueError.INVALID_LEAGUE)
+                NOT_FOUND -> throw LeagueException(LeagueError.LEAGUE_NOT_FOUND_ERROR)
+                else -> throw LeagueException(LeagueError.UNKNOWN_ERROR)
+            }
+        }    }
 
 }

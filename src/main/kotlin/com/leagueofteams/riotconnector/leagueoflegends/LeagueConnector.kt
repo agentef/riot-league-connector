@@ -14,5 +14,6 @@ interface LeagueConnector {
     fun getMasterLeagueByQueue(region: RegionUrl, queue: Queue): LeagueListDTO
     fun getAllTheLeagueEntries(region: RegionUrl, queue: Queue, division: Division, tier: Tier): List<LeagueEntryDTO>
     fun getLeagueByLeagueId(region: RegionUrl, leagueId: Long): LeagueListDTO
+    fun getLeagueEntriesBySummonerId(summonerId: String, region: RegionUrl): List<LeagueEntryDTO>
 
 }

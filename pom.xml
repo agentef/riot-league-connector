@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.league-of-teams</groupId>
 	<artifactId>riot-connector</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>0.1.5</version>
 	<name>riot-connector</name>
 	<description>Project responsible for access to Riot's League of Legends API</description>
 
@@ -88,5 +88,12 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<distributionManagement>
+		<repository>
+			<id>myMavenRepo.write</id>
+			<url>https://mymavenrepo.com/repo/h497KE38p8OFZkiTuPR0/</url>
+		</repository>
+	</distributionManagement>
 
 </project>

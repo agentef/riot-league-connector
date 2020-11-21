@@ -6,7 +6,6 @@ import com.leagueofteams.riotconnector.leagueoflegends.client.response.league.Le
 import feign.Param
 import feign.RequestLine
 import org.springframework.cloud.openfeign.FeignClient
-import org.springframework.web.bind.annotation.RequestParam
 import java.net.URI
 
 @FeignClient(name = "\${connector.league.league.name}", configuration = [ClientConfiguration::class])
@@ -16,15 +15,7 @@ interface LeagueClient {
     fun getChallengerLeagueByQueue(urlPrefix: URI, @Param("queue") queue: String): LeagueListDTO
 
     @RequestLine("GET /lol/league/v4/entries/by-summoner/{encryptedSummonerId}")
-    fun getLeagueEntriesBySummonerId(urlPrefix: URI,
-                                     @Param("encryptedSummonerId") encryptedSummonerId: String
-//                                     @RequestParam("champion") champion: List<Int>,
-//                                     @RequestParam("queue") queue: List<Int>,
-//                                     @RequestParam("endTime") endTime: Long,
-//                                     @RequestParam("beginTime") beginTime: Long,
-//                                     @RequestParam("endIndex") endIndex: Int,
-//                                     @RequestParam("beginIndex") beginIndex: Int
-    ): List<LeagueEntryDTO>
+    fun getLeagueEntriesBySummonerId(urlPrefix: URI, @Param("encryptedSummonerId") encryptedSummonerId: String): List<LeagueEntryDTO>
 
     @RequestLine("GET /lol/league/v4/entries/{queue}/{tier}/{division}")
     fun getAllTheLeagueEntries(
