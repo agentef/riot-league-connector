@@ -15,5 +15,5 @@ data class LeagueEntryDTO (
         var veteran: Boolean,
         var freshBlood: Boolean,
         var inactive: Boolean,
-        var miniSeries: MiniSeriesDTO
+        var miniSeries: MiniSeriesDTO?
 )
